@@ -1,0 +1,73 @@
+openapi: '3.0.3'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /test:
+    get:
+    operationId: getUsuarios
+      summary: Obtém todos os usuários do sistema
+      tags:
+        - Usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            appication/json:
+              schema:
+                type: object
+                properties: 
+                  usuarios:
+                    type: array
+/users:
+    get:
+      operationId: getById
+      summary: Obtém um usuário a partir do id
+      tags:
+        - Usuários
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Retorna um usuário
+          content:
+            appication/json:
+              schema:
+                type: object
+                properties:
+                  usuario:
+                    type: object
+                      $ref: "#/components/schemas/Usuario"
+
+        '400':
+          description: Bad Request
+          content:
+            appication/json:
+              schema: 
+                $ref:  "#/components/schemas/Erro"
+                components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id do usuário
+          example: 9
+        email:
+          type: string
+          description: E-mail do usuário
+          example: foo@bar.com.br
+    Erro:
+      type: object
+      properties:
+        msg:
+          type: string
+          description: Mensagem de erro
+          example: Usuário não encontrado!
